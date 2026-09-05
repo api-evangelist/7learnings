@@ -1,0 +1,83 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://github.com/7Learnings (public repositories + release feeds),
+  registry.npmjs.org, pypi.org, registry.terraform.io, rubygems.org, crates.io,
+  search.maven.org, api.nuget.org, proxy.golang.org
+summary: >-
+  7Learnings publishes NO API client SDK, in any language, on any registry. Searches of npm,
+  PyPI, the Terraform Registry, RubyGems, crates.io, Maven Central, NuGet and pkg.go.dev
+  returned nothing for 7learnings. That is expected: the product has no public API to wrap -
+  integration is data transport, and the client-side work is done by the customer's warehouse
+  or commerce platform. What the company DOES publish are three first-party open-source
+  developer tools from its own platform-engineering work, distributed only as GitHub releases.
+  None of them is a client for a 7Learnings API, so no `SDKs` pointer is emitted for this file.
+sdk_count: 0
+package_count: 3
+
+packages:
+- name: terraform-provider-stacks-lite
+  official: true
+  language: Go
+  kind: terraform-provider
+  purpose: Terraform provider to read dependent tfplan outputs
+  registry: github-releases
+  registry_note: >-
+    Not published to registry.terraform.io - a lookup of the 7Learnings namespace on the
+    Terraform Registry returns zero providers, so consumers install from the GitHub release
+    artifacts or build from source.
+  repository: https://github.com/7Learnings/terraform-provider-stacks-lite
+  version: v0.1.0
+  published: '2026-05-28'
+  source: https://github.com/7Learnings/terraform-provider-stacks-lite/releases.atom
+- name: terraform-provider-systemd-creds
+  official: true
+  language: Go
+  kind: terraform-provider
+  purpose: Ephemeral resource to securely deploy encrypted systemd credentials
+  registry: github-releases
+  repository: https://github.com/7Learnings/terraform-provider-systemd-creds
+  version: null
+  published: null
+  note: >-
+    Checked, nothing to record - the repository's release feed contains no release entries, so
+    there is no tagged version. Repository last updated 2026-03-24 (repo listing), feed touched
+    2026-09-05. Consumers must build from source; a consumer cannot tell what version they are
+    getting.
+  source: https://github.com/7Learnings/terraform-provider-systemd-creds/releases.atom
+- name: gh-access-token
+  official: true
+  language: Python
+  kind: cli-tool
+  purpose: Get a GitHub access token
+  registry: github-releases
+  registry_note: >-
+    Absent from PyPI - https://pypi.org/pypi/gh-access-token/json returns 404. Installed from
+    the GitHub release or the repository.
+  repository: https://github.com/7Learnings/gh-access-token
+  version: v0.5.1
+  published: '2026-01-28'
+  source: https://github.com/7Learnings/gh-access-token/releases.atom
+
+forks_and_mirrors:
+  note: >-
+    Recorded for completeness and explicitly NOT counted as 7Learnings packages - these are
+    forks or read-only mirrors of third-party projects kept in the org.
+  repositories:
+  - {name: terraform-provider-keycloak, upstream: Terraform provider for Keycloak, updated: '2025-11-07'}
+  - {name: ssh2-python, upstream: Python bindings for libssh2, updated: '2025-08-28'}
+  - {name: ssh-python, upstream: Python bindings for libssh, updated: '2025-08-28'}
+  - {name: ruamel-yaml, upstream: mirror of the official hg repository, updated: '2024-01-16'}
+  - {name: dbt-core, upstream: dbt Labs, updated: '2023-03-07'}
+  - {name: dbt-bigquery, upstream: dbt Labs, updated: '2022-07-27'}
+  - {name: code-challenges, upstream: null, updated: '2025-06-27'}
+
+registries_searched:
+- {registry: npm, query: 7learnings, result: no packages}
+- {registry: PyPI, query: 7learnings / gh-access-token, result: 404}
+- {registry: Terraform Registry, query: namespace 7Learnings, result: 0 providers}
+- {registry: RubyGems, query: 7learnings, result: no packages}
+- {registry: crates.io, query: 7learnings, result: no packages}
+- {registry: Maven Central, query: 7learnings, result: no packages}
+- {registry: NuGet, query: 7learnings, result: no packages}
+- {registry: pkg.go.dev, query: 7learnings, result: no published module}

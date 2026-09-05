@@ -64,5 +64,25 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-7Learnings is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://equityzen.com/company/7learnings
+7Learnings GmbH (Berlin and New York, founded 2019) builds a retail AI platform for predictive
+pricing — machine-learning models forecast the sales, revenue and profit impact of every candidate
+price, and the platform pushes optimized price, promotion, performance-marketing and ordering
+decisions back into the retailer's commerce stack.
+
+**There is no public API.** 7Learnings publishes no OpenAPI, no GraphQL schema and no AsyncAPI, and
+there is no `api.7learnings.com`. Integration is per-customer batch data exchange, and the real
+contract is a published 25-page *Initial Data Request* specification (13 input tables with
+column-level types, the revenue/profit formulas, the output specification and a 40+ rule catalogue)
+linked from the developer portal. This profile transcribes that document rather than inventing a
+spec that does not exist.
+
+What the company does serve publicly, found by probe:
+
+- An OAuth-protected MCP endpoint at `https://7learnings.com/wp-json/mcp/mcp-oauth-server`, with
+  RFC 8414 and RFC 9728 discovery documents on `/.well-known/`. `tools/list` returns
+  `401 mcp_unauthorized`, so the tool set is not recorded.
+- A dated changelog, a 20-page knowledge base, a pricing glossary, and a security page naming
+  SOC 2 Type II, ISO/IEC 27001:2022 (Prescient Security) and a Vanta trust center.
+
+Sources: https://7learnings.com/developer/ · https://7learnings.com/docs/ ·
+https://equityzen.com/company/7learnings

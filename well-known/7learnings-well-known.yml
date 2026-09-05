@@ -1,0 +1,46 @@
+generated: '2026-09-05'
+method: probed
+source: live HTTPS probes of the named /.well-known/ paths on every host this record knows
+note: >-
+  7learnings.com is the only host in this record that resolves to a distinct TLS endpoint.
+  api., app., docs., developers., status. and trust. 7learnings.com all resolve via a wildcard
+  CNAME to ghs.googlehosted.com but present no certificate for those names — every HTTPS
+  connection fails at the TLS handshake (curl exit 35), so they were recorded as unreachable
+  rather than as 404s. Two documents are served and both are real JSON: an RFC 8414 OAuth
+  authorization server metadata document and an RFC 9728 OAuth protected resource metadata
+  document, published by the site's WordPress MCP adapter. There is no security.txt.
+hosts:
+- host: 7learnings.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: 7learnings-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: 7learnings-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.7learnings.com
+  unreachable: true
+  detail: TLS handshake failure - wildcard DNS to ghs.googlehosted.com with no certificate for this name
+  documents: []
+- host: app.7learnings.com
+  unreachable: true
+  detail: TLS handshake failure - wildcard DNS to ghs.googlehosted.com with no certificate for this name
+  documents: []
+- host: docs.7learnings.com
+  unreachable: true
+  detail: TLS handshake failure - wildcard DNS to ghs.googlehosted.com with no certificate for this name
+  documents: []

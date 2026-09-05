@@ -1,0 +1,19 @@
+generated: '2026-09-05'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: 7learnings.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 17 13:56:44 2026 GMT
+  hsts: false
+domains:
+- domain: 7learnings.com
+  dnssec: true
+  caa:
+  - 0 issue "letsencrypt.org"
+  - 0 issue "sectigo.com"
+  - 0 issue "pki.goog"
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

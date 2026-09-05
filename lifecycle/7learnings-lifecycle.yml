@@ -1,0 +1,64 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://7learnings.com/changelog/, https://7learnings.com/docs/,
+  https://7learnings.com/security-compliance-data-protection/, live probes
+summary: >-
+  7Learnings runs a public, actively-maintained dated changelog and a public knowledge base.
+  It publishes no API versioning policy, no deprecation policy, no Sunset/Deprecation header
+  contract, no SLA and no public status page - consistent with a product that has no public
+  API contract to version.
+
+versioning:
+  scheme: none-published
+  detail: >-
+    No semantic version, no dated API version, no version header or path segment is documented.
+    The platform is delivered as continuously-updated single-tenant SaaS.
+  evidence: https://7learnings.com/changelog/
+
+change_log:
+  present: true
+  url: https://7learnings.com/changelog/
+  status: 200
+  cadence: several entries per month
+  latest: '2026-09-02'
+
+deprecation_policy:
+  present: false
+  rfc8594_headers: false
+  detail: >-
+    No deprecation policy page, no Sunset or Deprecation response-header commitment, and no
+    advance-notice window is published. The only retirement-shaped statement found is a data
+    retention rule in the 2026-08-13 changelog entry - "unused optimizations removed after one
+    year" - which governs stored optimization records, not an interface.
+  evidence: https://7learnings.com/changelog/
+
+status_page:
+  present: false
+  detail: >-
+    No public status page. https://7learnings.com/status/ returns 404 and status.7learnings.com
+    resolves only through a wildcard CNAME with no TLS certificate (handshake fails). Pipeline
+    health is communicated per-customer instead: the Steering App has a Pipeline Status view and
+    Pipeline Subscriptions, which send EMAIL alerts on "Forecast Failure - Data Issue" and
+    "Forecast Completion". There is no webhook and no public incident feed.
+  evidence:
+  - url: https://7learnings.com/status/
+    status: 404
+  - url: https://7learnings.com/docs/pipeline-status/
+    status: 200
+  - url: https://7learnings.com/docs/pipeline-subscriptions/
+    status: 200
+
+sla:
+  present: false
+  detail: No public SLA or uptime commitment is published; terms are contracted per customer.
+
+support_lifecycle:
+  data_retention: Unused optimizations removed after one year (changelog 2026-08-13)
+  pentest_cadence: Annual penetration tests of SaaS and Cloud services
+  vulnerability_scanning: Daily scans of dependencies and container images
+  access_review: Access rights reviewed every three months
+  evidence: https://7learnings.com/security-compliance-data-protection/
+
+deprecated_operations: []
+deprecated_operations_note: No OpenAPI exists, so no operation-level deprecation could be derived.

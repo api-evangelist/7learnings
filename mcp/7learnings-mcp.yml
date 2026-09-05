@@ -1,0 +1,70 @@
+generated: '2026-09-05'
+method: probed
+source: https://7learnings.com/.well-known/oauth-protected-resource
+name: 7Learnings MCP (WordPress MCP Adapter)
+status: published
+summary: >-
+  7learnings.com serves a live, OAuth-protected remote MCP surface. It was found by probe, not by
+  documentation: the site publishes an RFC 8414 authorization-server metadata document declaring
+  a single scope "mcp", and an RFC 9728 protected-resource document naming
+  https://7learnings.com/wp-json/mcp/mcp-oauth-server as the protected MCP resource. The WordPress
+  REST index confirms an "mcp" namespace with three routes.
+
+deployment:
+  mode: remote
+  endpoint: https://7learnings.com/wp-json/mcp/mcp-oauth-server
+  auth: oauth
+  verified: probed
+
+scope_and_caveat: >-
+  READ THIS BEFORE TREATING THIS AS A PRODUCT API. This MCP server is the WordPress MCP Adapter
+  running on 7Learnings' WordPress marketing site and knowledge base (7learnings.com). It is a
+  real MCP endpoint the company serves from its own domain, but nothing in 7Learnings'
+  documentation presents it as an interface to the predictive-pricing platform, and the tool list
+  could not be read to confirm what it exposes. Do not describe it as an MCP interface to the
+  7Learnings optimization product.
+
+endpoints_probed:
+- url: https://7learnings.com/wp-json/mcp/mcp-oauth-server
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  status: 401
+  response: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+- url: https://7learnings.com/wp-json/mcp/mcp-adapter-default-server
+  method: POST
+  status: 401
+  response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+- url: https://7learnings.com/wp-json/jet-engine/v1/mcp
+  method: POST
+  status: 401
+  response: '{"code":"rest_forbidden","message":"You cannot access this resource.","data":{"status":401}}'
+- url: https://7learnings.com/wp-json/mcp
+  method: POST
+  status: 404
+  response: rest_no_route
+
+authorization:
+  metadata_document: https://7learnings.com/.well-known/oauth-authorization-server
+  issuer: https://7learnings.com
+  authorization_endpoint: https://7learnings.com/oauth/authorize
+  token_endpoint: https://7learnings.com/oauth/token
+  revocation_endpoint: https://7learnings.com/oauth/revoke
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+  scopes_supported: [mcp]
+  bearer_methods_supported: [header]
+
+tools: []
+tools_note: >-
+  NOT RECORDED. tools/list returns 401 mcp_unauthorized without an OAuth bearer token, so the live
+  tool set and its inputSchema require authenticated introspection. No tool list is published in
+  documentation or in an llms.txt (7learnings.com/llms.txt returns 404), so there is nothing to
+  fall back to. No tools were invented.
+
+wordpress_mcp_routes_seen:
+- /wp-json/mcp/mcp-oauth-server
+- /wp-json/mcp/mcp-adapter-default-server
+- /wp-json/jet-engine/v1/mcp
+- /wp-json/jet-engine/v1/mcp-tools

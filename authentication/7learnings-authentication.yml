@@ -1,0 +1,77 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  https://7learnings.com/.well-known/oauth-authorization-server,
+  https://7learnings.com/.well-known/oauth-protected-resource,
+  https://7learnings.com/security-compliance-data-protection/,
+  https://7learnings.com/changelog/
+summary: >-
+  7Learnings publishes no public REST API and therefore no OpenAPI securitySchemes. Two
+  authentication surfaces are nevertheless documented or observable: OAuth 2.0 on the MCP
+  endpoint served from 7learnings.com, and SSO/MFA/passwordless sign-in on the 7Learnings
+  Steering App. Customer data integration is authenticated per-connection, per-customer,
+  by the credentials of the transport (BigQuery/Snowflake/Fabric service accounts, cloud
+  object-store keys, SFTP/FTPS credentials, or the customer's own Shopify/Tradebyte/
+  Google Ads/Amazon SP-API tokens) - 7Learnings does not issue a public API key.
+
+schemes:
+- id: mcp_oauth2
+  type: oauth2
+  surface: https://7learnings.com/wp-json/mcp/mcp-oauth-server
+  flows:
+    authorizationCode:
+      authorizationUrl: https://7learnings.com/oauth/authorize
+      tokenUrl: https://7learnings.com/oauth/token
+      refreshUrl: https://7learnings.com/oauth/token
+      revocationUrl: https://7learnings.com/oauth/revoke
+      scopes:
+        mcp: Access the MCP server surface published by 7learnings.com
+  pkce_required_methods: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_registration: >-
+    No RFC 7591 dynamic client registration endpoint is advertised. The authorization server
+    sets client_id_metadata_document_supported = true, so a client identifies itself with a
+    URL to a client-id metadata document rather than a pre-registered client_id.
+  bearer_methods_supported: [header]
+  evidence: https://7learnings.com/.well-known/oauth-authorization-server
+  evidence_status: 200
+
+- id: steering_app_signin
+  type: interactive
+  surface: 7Learnings Steering App (customer web frontend)
+  methods:
+  - Single sign-on (SSO)
+  - Multi-factor authentication (MFA)
+  - Passwordless login
+  detail: >-
+    "SSO and Multi-Factor Authentication (MFA) support" is stated on the security page;
+    the 2026-08-06 changelog entry records that passwordless login and two-factor
+    authentication are encouraged for app users.
+  evidence: https://7learnings.com/security-compliance-data-protection/
+  evidence_status: 200
+
+- id: customer_transport_credentials
+  type: delegated
+  surface: data integration connectors (inbound and outbound)
+  detail: >-
+    Each customer connection carries its own credentials for the underlying transport or vendor
+    API - BigQuery, Snowflake, Microsoft Fabric, Google Cloud Storage, AWS S3, Azure Blob
+    Storage, SFTP, FTPS, HTTPS, and the customer's Shopify, Tradebyte, Plentymarkets,
+    commercetools, Scayle, Salesforce Commerce Cloud, Google Ads, Google Shopping, Google
+    Analytics, Amazon SP-API and Amazon Ads accounts. No credential shapes, key prefixes or
+    header names are published.
+  evidence: https://app-static-7l.storage.googleapis.com/latest/7Learnings_initial_data_request.pdf
+  evidence_status: 200
+
+key_management:
+  customer_managed_encryption_keys: true
+  detail: >-
+    "Customer-managed encryption keys, allowing clients the ability to immediately delete keys
+    to render data unreadable if necessary." Each client is deployed in a dedicated GCP project
+    with VPC Service Controls.
+  evidence: https://7learnings.com/security-compliance-data-protection/
+
+not_found:
+- No public API key issuance or developer key management page
+- No /.well-known/openid-configuration (404)
+- No documented bearer/HTTP auth for a product REST API

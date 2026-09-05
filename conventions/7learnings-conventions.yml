@@ -1,0 +1,136 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://app-static-7l.storage.googleapis.com/latest/7Learnings_initial_data_request.pdf,
+  https://7learnings.com/docs/output-options/, https://7learnings.com/docs/pipeline-subscriptions/,
+  https://7learnings.com/changelog/, https://7learnings.com/.well-known/oauth-authorization-server
+docs: https://7learnings.com/docs/
+scope: >-
+  These are DATA-EXCHANGE conventions, not HTTP API conventions. 7Learnings ships no public
+  REST API: integration is batch data transport in (warehouse, object store, SFTP/FTPS/HTTPS,
+  or vendor connector) and optimized price/marketing changes out (table, file, or an API call
+  into the customer's own commerce platform). The one HTTP protocol surface the company serves
+  publicly is the OAuth-gated MCP endpoint on 7learnings.com, whose conventions are OAuth 2.0's.
+
+authentication:
+  style: >-
+    No public API key. OAuth 2.0 authorization-code + PKCE (S256) on the MCP endpoint; SSO, MFA
+    and passwordless login on the Steering App; per-customer transport credentials on every
+    data connector.
+  detail: see authentication/7learnings-authentication.yml
+
+transport:
+  input_formats: [database table, CSV, Parquet]
+  input_targets: [BigQuery, Snowflake, Microsoft Fabric, Google Cloud Storage, AWS S3, Azure Blob Storage, SFTP, FTPS, HTTPS]
+  input_connectors: [Tradebyte, Shopify, Google Shopping, Google Ads, Google Analytics, Amazon Selling Partner API, Amazon Ads]
+  output_formats: [database table, CSV, Parquet, Salesforce Commerce Cloud Pricebook, vendor API call]
+  output_targets: [BigQuery, Snowflake, user computer, Google Cloud Storage, AWS S3, Azure Blob Storage, SFTP server, HTTPS server, Salesforce Commerce Cloud, commercetools, Tradebyte, Plentymarkets, Shopify, Scayle Commerce Engine]
+  csv_dialect:
+    rfc4180: true
+    quoting: RFC 4180 compliant
+    timestamps: UTC
+    booleans: lowercase
+    since: '2026-08-11'
+    source: https://7learnings.com/changelog/
+  customization_note: >-
+    "We always customize the data export format for each customer, so that you can decide which
+    KPIs should be in these export files." The export schema is therefore per-tenant, not a
+    published fixed contract.
+
+pagination:
+  applicability: na
+  detail: No public HTTP collection endpoints exist; data moves as whole tables and files.
+
+field_selection:
+  applicability: na
+  detail: >-
+    There is no sparse-fieldset or expand parameter. The nearest equivalent is the per-customer
+    choice of which KPIs appear in an export file, and Upload Filters in the Steering App.
+
+metadata:
+  applicability: na
+
+request_id_tracing:
+  applicability: na
+  detail: >-
+    No request-id header is published. The traceable unit is a pipeline RUN, surfaced in the
+    Steering App's Pipeline Status view (step names and progress timeline, reworked 2026-08-31)
+    and in Upload Evaluation.
+
+versioning:
+  scheme: none-published
+  detail: see lifecycle/7learnings-lifecycle.yml
+
+error_envelope:
+  applicability: partial
+  http_surface: >-
+    The MCP endpoint returns a JSON error object shaped
+    {"code": "...", "message": "...", "data": {"status": <int>}} - the WordPress REST error
+    envelope, observed as {"code":"mcp_unauthorized","message":"MCP authentication required.",
+    "data":{"status":401}}. This is not RFC 9457 problem+json.
+  batch_surface: >-
+    Data-pipeline failures are not returned to a caller; they are notified by EMAIL through
+    Pipeline Subscriptions ("Forecast Failure - Data Issue") and shown in Pipeline Status.
+  rfc9457: false
+
+rate_limit_signaling:
+  applicability: na
+  detail: No rate-limit headers or documented limits. see rate-limits/7learnings-rate-limits.yml
+
+idempotency:
+  applicability: na
+  coverage: none
+  supported: false
+  mechanisms: []
+  detail: >-
+    No replay-protection mechanism is documented, because there is no public mutating HTTP
+    surface to protect: there is no Idempotency-Key header, no idempotency key field, and no
+    documented at-most-once semantics. Batch transport is snapshot-shaped instead - the
+    provider states its system "either handles daily updated snapshots of the full history, or
+    receives the full history once and then daily snapshots", which makes re-delivery of the
+    same snapshot naturally convergent rather than idempotency-keyed. That is a property of
+    the design, not a published guarantee, so `coverage` is recorded as none and
+    `applicability` as na rather than claiming a mechanism the provider does not document.
+  source: https://app-static-7l.storage.googleapis.com/latest/7Learnings_initial_data_request.pdf
+
+dry_run_mode:
+  applicability: na
+  supported: false
+  detail: >-
+    No dry-run flag on any public interface. The product-level analogue is human-in-the-loop:
+    optimizations are reviewed in the Steering App, Optimization Comparison lets a user compare
+    candidate optimizations before committing, and an upload can be configured with reviewers
+    before the "Create Upload" step pushes changes out. None of this is exposed as a machine
+    interface.
+  source: https://7learnings.com/docs/output-options/
+
+reversibility:
+  applicability: na
+  grade: na
+  detail: >-
+    There is no public write API, so there is no reversal operation to record. NOTE FOR ANY
+    FUTURE PASS - the consequential write here is real but it happens in the CUSTOMER's system:
+    7Learnings pushes price changes into commercetools, Tradebyte, Plentymarkets, Shopify,
+    Scayle or a Salesforce Commerce Cloud pricebook. Whether such a push can be reversed, and
+    inside what window, is governed by the receiving platform, and 7Learnings publishes no
+    rollback operation, no undo endpoint and no stated reversal window of its own. No window is
+    asserted here because none is stated anywhere in the public documentation.
+  write_surfaces:
+  - surface: Scheduled / manual price+marketing upload to the customer's commerce platform
+    reversal_operation: null
+    window: null
+    docs: https://7learnings.com/docs/output-options/
+  - surface: Optimization records held in the Steering App
+    reversal_operation: null
+    window: null
+    note: >-
+      Not a reversal - a retention rule. The 2026-08-13 changelog states unused optimizations
+      are removed after one year.
+    docs: https://7learnings.com/changelog/
+
+cross_links:
+  errors: null
+  lifecycle: lifecycle/7learnings-lifecycle.yml
+  authentication: authentication/7learnings-authentication.yml
+  rate_limits: rate-limits/7learnings-rate-limits.yml
+  data_model: data-model/7learnings-data-model.yml

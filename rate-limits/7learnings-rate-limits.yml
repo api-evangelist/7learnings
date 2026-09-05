@@ -1,0 +1,19 @@
+generated: '2026-09-05'
+method: searched
+source: https://7learnings.com/docs/
+limit_count: 0
+note: >-
+  No rate limits are published, and there is no public API surface on which to observe them.
+  The knowledge base (20 documentation pages, enumerated from the docs sitemap) documents no
+  quotas, throttles, request ceilings or concurrency caps; the Initial Data Request
+  specification documents no ingestion volume limits; and no RateLimit-*, X-RateLimit-* or
+  Retry-After header contract is stated anywhere. The one public HTTP endpoint - the
+  OAuth-gated MCP resource - returns 401 before any limit could be observed, so nothing was
+  measured on a live response either. Recorded as an honest zero, not an omission.
+rate_limits: []
+headers: []
+exhaustion_status: null
+evidence:
+- {url: 'https://7learnings.com/docs/', status: 200}
+- {url: 'https://7learnings.com/docs-sitemap1.xml', status: 200}
+- {url: 'https://7learnings.com/wp-json/mcp/mcp-oauth-server', status: 401}

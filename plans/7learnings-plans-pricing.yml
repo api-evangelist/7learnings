@@ -1,0 +1,20 @@
+generated: '2026-09-05'
+method: searched
+source: https://7learnings.com/
+plan_count: 0
+public_pricing: false
+note: >-
+  7Learnings publishes no plans, tiers, list prices, quotas or overage rates. There is no
+  pricing page: https://7learnings.com/pricing/ returns 404 and the full page sitemap
+  (https://7learnings.com/page-sitemap1.xml, 96 pages) contains no pricing or plans page. The
+  two pricing-shaped URLs on the site are product pages, not commercial ones -
+  /pricing-software/ describes the product category and /profit-uplift-calculator/ is a lead-gen
+  ROI calculator. The only route to a number is "Book Demo" (https://7learnings.com/demo/), an
+  enterprise sales motion. The commercial model is publicly described as outcome-based retail AI,
+  but the terms of that outcome-based pricing are not published.
+plans: []
+evidence:
+- {url: 'https://7learnings.com/pricing/', status: 404}
+- {url: 'https://7learnings.com/page-sitemap1.xml', status: 200}
+- {url: 'https://7learnings.com/demo/', status: 200}
+- {url: 'https://7learnings.com/pricing-software/', status: 200}

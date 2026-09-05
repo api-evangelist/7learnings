@@ -1,0 +1,78 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://7learnings.com/pricing-glossary/,
+  https://app-static-7l.storage.googleapis.com/latest/7Learnings_initial_data_request.pdf,
+  https://7learnings.com/docs/
+summary: >-
+  7Learnings publishes a public pricing glossary and a field-level data dictionary. This file
+  indexes both - the business vocabulary from the glossary page, and the data vocabulary from
+  the Initial Data Request specification and the Steering App knowledge base. Definitions are
+  the provider's; nothing was authored here.
+sources:
+- {name: Pricing Glossary, url: 'https://7learnings.com/pricing-glossary/', status: 200}
+- {name: Initial Data Request specification, url: 'https://app-static-7l.storage.googleapis.com/latest/7Learnings_initial_data_request.pdf', status: 200}
+- {name: Knowledge base, url: 'https://7learnings.com/docs/', status: 200}
+
+groups:
+- name: Pricing Science
+  terms:
+  - {term: Pricing Strategy, definition: 'How a company uses pricing to achieve its strategic goals, such as offering lower prices to increase sales volume or higher prices to decrease backlog.'}
+  - {term: Pricing Policy, definition: 'How a company sets the prices of its products and services based on costs, value, demand, and competition.'}
+  - {term: Price Discrimination, definition: 'When a retailer sells certain products for a lower price during intense demand from price-sensitive customers and increases the price during times of high demand.'}
+  - {term: Coupons/Vouchers, definition: 'Code-based, one-time discounts provided by retailers to customers, usually on a segmented basis.'}
+  - {term: Price Setting, definition: 'The determination and assignment of prices to specific products, categories, or assortments.'}
+  - {term: Price Optimization, definition: "Determining and setting prices that work best to meet a company's set business objectives - maximizing profits and revenue, selling a certain quantity of stock, or selling an amount within a specific duration of time."}
+  - {term: Static Pricing, definition: "A price set by a retailer and not changed at any point in the product's lifecycle."}
+  - {term: Dynamic Pricing, definition: 'A method whereby retailers continuously and (semi-)automatically adjust the prices of their products to match market demand to increase sales opportunities and optimize profits.'}
+  - {term: Rules-Based Pricing, definition: 'Pricing methodology using predetermined conditional rules (if-then statements) to adjust prices.'}
+  - {term: Competition-Based Pricing, definition: "A form of rule-based pricing, which is about matching or beating a competitor's price for any given item."}
+  - {term: Cost Plus Pricing, definition: 'The simplest method of determining price - you make something and sell it for more than you spent making it.'}
+  - {term: Machine Learning-Based Pricing, definition: "Advanced pricing solutions use machine learning algorithms to determine optimal prices; these can measure customers' willingness to pay using price elasticity."}
+  - {term: Predictive Pricing, definition: 'Machine learning-based pricing methods which use advanced algorithms that learn from their results in a (semi-)automated way.'}
+  - {term: Price Communication, definition: 'How a retailer communicates its prices to consumers, either through the method or the value shared.'}
+  - {term: Demand Forecasting, definition: 'Using data to understand and predict customer demand in order to improve business management while meeting critical KPIs.'}
+  - {term: Price Elasticity, definition: 'Price elasticity measures how demand for a product changes after a price adjustment.'}
+- name: Internal Data
+  terms:
+  - {term: Product Attributes, definition: "Essential information such as cost, margin ceiling, base price, and MAP price. Product attributes are the digital representation of a retailer's assortment."}
+  - {term: Inventory Levels, definition: 'Essential data regarding details about current inventory levels and overall supply.'}
+  - {term: Transactional Data, definition: 'All transactions, units sold, price history, and conversions; also buyer information and manufacturing or sourcing costs.'}
+- name: External Data
+  terms:
+  - {term: Competitor Data, definition: 'May include list price, ship price, buy-box price, FBA, out of stocks, geography, and product reviews and ratings.'}
+  - {term: Days of the Week, definition: 'Days of the week influence consumer demand.'}
+  - {term: Holidays, definition: 'Upcoming holidays increase demand for specific items.'}
+  - {term: Regional Trends, definition: 'Localized factors and conditions may influence demand from different regional or geographic segments.'}
+  - {term: Weather and Seasonal Data, definition: 'Weather can affect sales, both as a broader pattern and for certain products.'}
+- name: Retail Models
+  terms:
+  - {term: E-commerce, definition: 'Retail based via online channels, such as a website or other online retail platforms.'}
+  - {term: Omnichannel, definition: 'Retail that spans both online/e-commerce and stationary/physical locations.'}
+  - {term: B2B, definition: 'Specialized products, parts, components, software, or other goods and services sold between businesses, not direct to consumers.'}
+  - {term: DTC, definition: 'A brand markets its products and sells them via its own channels, not third-party retailers.'}
+  - {term: Private Label, definition: 'Products manufactured by a third party, branded by a retailer, and sold under its label and via its retail channels.'}
+- name: Technology
+  terms:
+  - {term: Deep Learning, definition: 'Computers learn via neural networks; the systems do not need to be trained by humans or are trained less intensively.'}
+  - {term: Artificial Intelligence, definition: 'Computers, robots, or other machines that mimic human intelligence and exhibit intelligent behaviors.'}
+  - {term: Machine Learning, definition: 'Developing algorithms to solve specific problems and feeding them with huge data sets.'}
+  - {term: Dynamic Pricing Software, definition: 'Software, often machine learning based, that aids in implementing dynamic price management.'}
+  - {term: Intelligent Algorithms, definition: 'Algorithms that learn on training data to predict the price effect on sales, revenue, and profit.'}
+  - {term: Goal-Driven Price Steering, definition: 'Also called Target Steering. Retailers define their goals rather than setting up a complex set of rules, and the engine calculates the optimal prices.'}
+  - {term: Automation, definition: 'Technology applications where human input is minimized.'}
+- name: Platform / Steering App
+  source_note: Term names taken from the knowledge base navigation and changelog; see https://7learnings.com/docs/
+  terms:
+  - {term: Optimization, definition: 'A run of the 7Learnings engine producing optimal prices and marketing decisions for a scope of products.'}
+  - {term: Optimization Group, definition: 'The grouping over which certain rules (e.g. Liquidation End Sell Through Rate) are enforced.'}
+  - {term: Scope, definition: 'The selection of products, markets and channels a prediction or optimization covers.'}
+  - {term: Forecast Variant, definition: 'An alternative forecast configuration used to produce predictions.'}
+  - {term: Target, definition: 'The business goal an optimization maximizes or constrains (e.g. profit, revenue, margin boundary).'}
+  - {term: Rule, definition: 'A constraint applied to an optimization; 7Learnings ships a default catalogue of 40+ rules (Table 17 of the Initial Data Request specification).'}
+  - {term: Liquidation End Profit, definition: 'Predicted profit at the end of a liquidation period, net of inventory depreciation (purchase_price minus end_liquidation_value).'}
+  - {term: Liquidation End STR, definition: 'Sell Through Rate achieved at the end of the liquidation period for an optimization group.'}
+  - {term: Marketing Intensity, definition: 'The per-product marketing spend level the optimizer may select.'}
+  - {term: tRoas, definition: 'Target return on ad spend, used in performance marketing optimization.'}
+  - {term: Upload, definition: 'The delivery of optimized price/marketing changes to the target system, manual or scheduled, optionally with reviewers and filters.'}
+  - {term: Pipeline, definition: 'The data import, cleaning, feature and forecasting run; its state is exposed as Pipeline Status and notified by Pipeline Subscriptions.'}

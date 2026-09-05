@@ -1,0 +1,20 @@
+generated: '2026-09-05'
+method: probed
+source: https://7learnings.com/.well-known/oauth-authorization-server
+docs: null
+docs_note: >-
+  No scope or permission reference page is published. The scope list below is the complete
+  scopes_supported array from the provider's own RFC 8414 authorization server metadata
+  document; nothing was added to it.
+authorization_server: https://7learnings.com
+scope_count: 1
+scopes:
+- name: mcp
+  description: >-
+    The only scope advertised by the 7learnings.com authorization server. It gates the MCP
+    protected resource at https://7learnings.com/wp-json/mcp/mcp-oauth-server, as declared by
+    the RFC 9728 protected-resource document. No finer-grained scopes are published and no
+    per-tool scoping is documented.
+  resource: https://7learnings.com/wp-json/mcp/mcp-oauth-server
+  evidence: https://7learnings.com/.well-known/oauth-protected-resource
+  evidence_status: 200

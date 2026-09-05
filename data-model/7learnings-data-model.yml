@@ -1,0 +1,191 @@
+generated: '2026-09-05'
+method: searched
+source: https://app-static-7l.storage.googleapis.com/latest/7Learnings_initial_data_request.pdf
+source_status: 200
+docs: https://7learnings.com/developer/
+summary: >-
+  7Learnings has no OpenAPI, but it does publish a real, field-level data contract: the
+  25-page "7Learnings Documentation / Initial Data Request" PDF linked from its developer
+  portal. This model is transcribed from that document - the input tables it consumes, the
+  keys that join them, and the outputs it produces. Nothing here is derived from a spec that
+  does not exist, and no field was invented.
+join_keys:
+  - market      # ISO 3166 country code, e.g. DE
+  - channel     # sales domain, e.g. amazon.de
+  - product_id  # unique identifier of the product or SKU
+  - time        # ISO 8601 UTC timestamp
+model_note: >-
+  Every input table is keyed on some subset of (market, channel, product_id[, time]). The
+  relationships below are therefore composite-key joins on a shared grain rather than
+  foreign-key references between documents.
+
+entities:
+- name: Channels
+  required: true
+  transfer: initial
+  description: Current list of sales channels for which prices are optimized. Supports virtual channels whose results replicate into several actual channels.
+  fields:
+  - {name: market, type: text, required: true, description: 'Country where the product was sold, ISO 3166 (e.g. DE)'}
+  - {name: channel, type: text, required: true, description: 'Sales domain where the product was sold (e.g. amazon.de)'}
+  - {name: conv_fkt_to_main_currency, type: decimal|integer, description: Factor the foreign currency is multiplied with to reach the main currency}
+  - {name: channel_currency, type: text, description: 'Three letter currency code, ISO 4217'}
+  - {name: upload_market, type: text, description: Country code used to differentiate the market ISO code from sub-channel definitions}
+  - {name: upload_currency, type: text, description: Currency code used to differentiate the channel currency from sub-channel definitions}
+  - {name: upload_channel, type: text, description: Sales domain where prices will be uploaded (e.g. zafr for Zalando France via Tradebyte)}
+  - {name: upload_conv_fkt_to_main_currency, type: decimal|integer, description: Conversion factor for the upload sub-channel}
+- name: PurchasePrices
+  required: true
+  transfer: automated
+  description: Current purchase prices (net landed cost / COGS) per product, optionally per market and channel.
+  fields:
+  - {name: market, type: text}
+  - {name: channel, type: text}
+  - {name: product_id, type: text, required: true}
+  - {name: purchase_price, type: decimal|integer, required: true, description: Net landed cost of a single unit incl. freight, customs, tariffs, insurance, handling}
+- name: Transactions
+  required: true
+  transfer: initial and automated
+  description: Sales data with revenues, profits and costs for the past two to three years; daily snapshots thereafter.
+  fields:
+  - {name: market, type: text}
+  - {name: channel, type: text}
+  - {name: product_id, type: text}
+  - {name: sales_before_returns, type: integer, description: Number of non-cancelled items ordered}
+  - {name: revenue, type: decimal|integer, description: Net revenue in main currency after returns, vouchers and discounts}
+  - {name: profit, type: decimal|integer, description: Net profit in main currency after all delivered costs}
+  - {name: purchase_cost, type: decimal|integer}
+  - {name: conv_fkt_to_main_currency, type: decimal|integer}
+  - {name: tax_rate, type: decimal|integer, description: '0 for tax-exclusive markets; e.g. 0.19 for Germany'}
+  - {name: voucher_spending, type: decimal|integer}
+  - {name: order_id, type: text|integer}
+  - {name: returns, type: integer|decimal}
+  - {name: time, type: timestamp, description: ISO 8601 UTC timestamp}
+  - {name: red_price_discount_spending, type: decimal|integer}
+  - {name: basket_position, type: integer|decimal}
+  - {name: inbound_cost, type: decimal|integer}
+  - {name: outbound_cost, type: decimal|integer}
+  - {name: other_cost, type: decimal|integer}
+  - {name: upload_market, type: text}
+  - {name: upload_channel, type: text}
+  - {name: customer_lifetime_value, type: decimal|integer, description: Incremental future profit driven by the transaction}
+- name: Prices
+  required: true
+  transfer: initial and automated
+  description: Current price information per product/market/channel.
+- name: ProductAttributes
+  required: true
+  transfer: automated
+  description: Current and historical product information - the digital representation of the assortment.
+- name: PricePoints
+  required: false
+  transfer: initial and automated
+  description: Lists of allowed price points.
+- name: Stock
+  required: true
+  transfer: automated
+  description: Current stock and availability information.
+- name: Promotions
+  required: false
+  transfer: initial and automated
+  description: Promotion activity.
+- name: Traffic
+  required: false
+  transfer: initial and automated
+  description: Organic and paid activity information - traffic/clicks per product.
+- name: CompetitorPrices
+  required: false
+  transfer: automated
+  description: Current and historical competitor prices.
+- name: Bundles
+  required: false
+  transfer: automated
+  description: Mapping of bundles to their component products.
+- name: CommissionRate
+  required: false
+  transfer: automated
+  description: Current commission rates per product (marketplace/platform commission).
+- name: MinimumOrderQuantity
+  required: false
+  transfer: automated
+  description: Minimum order numbers required.
+- name: PriceMarketingChanges
+  direction: output
+  description: >-
+    The optimization output - optimized price changes and marketing decisions, delivered as a
+    table (BigQuery, Snowflake), CSV/Parquet files (local, GCS, S3, Azure Blob, SFTP, HTTPS),
+    a Salesforce Commerce Cloud Pricebook, or an API call into commercetools, Tradebyte,
+    Plentymarkets, Shopify or Scayle Commerce Engine.
+
+relationships:
+- from: PurchasePrices
+  to: Channels
+  kind: belongs_to
+  via: (market, channel)
+- from: Transactions
+  to: Channels
+  kind: belongs_to
+  via: (market, channel)
+- from: Transactions
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: Transactions
+  to: PurchasePrices
+  kind: belongs_to
+  via: (market, channel, product_id)
+- from: Prices
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: PricePoints
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: Stock
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: Promotions
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: Traffic
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: CompetitorPrices
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: Bundles
+  to: ProductAttributes
+  kind: has_many
+  via: product_id
+  detail: A bundle maps to the composition of products it contains.
+- from: CommissionRate
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: MinimumOrderQuantity
+  to: ProductAttributes
+  kind: belongs_to
+  via: product_id
+- from: PriceMarketingChanges
+  to: ProductAttributes
+  kind: belongs_to
+  via: (upload_market, upload_channel, product_id)
+
+derived_kpis:
+  note: >-
+    Section 4 of the same document publishes the exact revenue and profit formulas and the
+    predicted-KPI definitions. Recorded here as names only - the formulas are the provider's.
+  fields:
+  - predicted_sales_before_returns
+  - predicted_avg_return_rate
+  - predicted_returns
+  - predicted_sales
+  - predicted_revenue
+  - predicted_profit
+  - predicted_avg_commission_cost
+  - gross_red_price_main
+  - predicted average liquidation end profit

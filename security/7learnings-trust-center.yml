@@ -1,0 +1,51 @@
+generated: '2026-09-05'
+method: searched
+source: https://7learnings.com/security-compliance-data-protection/
+trust_center:
+  present: true
+  url: https://app.eu.vanta.com/7learnings.com/trust/7hxwl4mmwiq3njsehrfi4z
+  status: 200
+  platform: Vanta (EU instance)
+  render_note: >-
+    The Vanta trust center returns 200 but is a client-rendered single-page app, so its document
+    list could not be read without a browser. It is recorded as LIVE, not as a readable document.
+    Every certification below is taken from 7Learnings' own security page, which links to it.
+  linked_from: https://7learnings.com/security-compliance-data-protection/
+
+certifications:
+- name: SOC 2 Type II
+  status: certified
+  detail: Confirms commitment to security, availability, and internal governance over time.
+  evidence: https://7learnings.com/security-compliance-data-protection/
+- name: ISO/IEC 27001:2022
+  status: certified
+  certifier: Prescient Security
+  detail: International standard for information security management systems.
+  evidence: https://7learnings.com/security-compliance-data-protection/
+- name: GDPR
+  status: compliant (self-asserted)
+  detail: All personal data processed in accordance with GDPR; data minimization applied.
+  evidence: https://7learnings.com/security-compliance-data-protection/
+
+program:
+  continuous_monitoring: Vanta, 24/7 security posture monitoring
+  penetration_testing: Annual penetration tests of SaaS and Cloud services
+  vulnerability_scanning: Daily scans of dependencies and container images
+  access_review: All access rights reviewed every three months
+  authentication: SSO and MFA supported
+  access_model: Zero Trust, least privilege
+  infrastructure_as_code: All infrastructure changes deployed via IaC for consistency and auditability
+
+architecture:
+  cloud: Google Cloud Platform
+  tenancy: single-tenant SaaS - each client deployed in a dedicated GCP project
+  network_controls: VPC Service Controls for data containment
+  encryption_in_transit: industry-standard protocols
+  encryption_at_rest: industry-standard protocols
+  key_management: >-
+    Customer-managed encryption keys; clients can immediately delete keys to render data
+    unreadable.
+
+contacts:
+  security: security@7learnings.com
+  general: info@7Learnings.com
