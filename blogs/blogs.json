@@ -1,0 +1,21 @@
+{
+  "repo": "7learnings",
+  "feeds": [
+    {
+      "source": "https://7learnings.com/blog/",
+      "feed_url": "https://7learnings.com/blog/feed/",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    },
+    {
+      "source": "https://7learnings.com/docs/",
+      "feed_url": "https://7learnings.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 1,
+  "fetched": "2026-09-06T19:17:18Z"
+}
