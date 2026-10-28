@@ -64,25 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-7Learnings GmbH (Berlin and New York, founded 2019) builds a retail AI platform for predictive
-pricing — machine-learning models forecast the sales, revenue and profit impact of every candidate
-price, and the platform pushes optimized price, promotion, performance-marketing and ordering
-decisions back into the retailer's commerce stack.
+7Learnings GmbH is a Berlin- and New York-based retail AI company, founded in 2019 by Felix Hoffmann, Eiko van Hettinga and Martin Nowak, whose platform applies predictive pricing and demand forecasting to B2C retail. Machine-learning models forecast the sales, revenue and profit impact of every candidate price, and the platform pushes optimized price, promotion, performance-marketing and ordering decisions back into the retailer's commerce stack. It ships as single-tenant SaaS on Google Cloud with a published data-integration contract rather than a public REST API: input arrives over BigQuery, Snowflake, Fabric, GCS, S3, Azure Blob, SFTP/FTPS/HTTPS or vendor connectors, and output is written back to commercetools, Tradebyte, Plentymarkets, Shopify, Scayle or Salesforce Commerce Cloud. It raised a EUR 10M+ Series B led by Acton Capital in May 2025 and is SOC 2 Type II and ISO/IEC 27001:2022 certified.
 
-**There is no public API.** 7Learnings publishes no OpenAPI, no GraphQL schema and no AsyncAPI, and
-there is no `api.7learnings.com`. Integration is per-customer batch data exchange, and the real
-contract is a published 25-page *Initial Data Request* specification (13 input tables with
-column-level types, the revenue/profit formulas, the output specification and a 40+ rule catalogue)
-linked from the developer portal. This profile transcribes that document rather than inventing a
-spec that does not exist.
+**Areas:** Company · Retail · Pricing · Price Optimization · Predictive Pricing · Demand Forecasting · Machine Learning · E-Commerce · Performance Marketing · Data Integration · Germany · Software-as-a-Service
 
-What the company does serve publicly, found by probe:
+## 7Learnings on APIs.io
 
-- An OAuth-protected MCP endpoint at `https://7learnings.com/wp-json/mcp/mcp-oauth-server`, with
-  RFC 8414 and RFC 9728 discovery documents on `/.well-known/`. `tools/list` returns
-  `401 mcp_unauthorized`, so the tool set is not recorded.
-- A dated changelog, a 20-page knowledge base, a pricing glossary, and a security page naming
-  SOC 2 Type II, ISO/IEC 27001:2022 (Prescient Security) and a Vanta trust center.
+Everything profiled for 7Learnings is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/7learnings/](https://apis.io/providers/7learnings/)** — or go straight to one of the APIs or properties below.
 
-Sources: https://7learnings.com/developer/ · https://7learnings.com/docs/ ·
-https://equityzen.com/company/7learnings
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [7Learnings MCP (WordPress MCP Adapter)](https://apis.io/servers/7learnings/7learnings-mcp-wordpress-mcp-adapter/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [7Learnings Authentication](https://apis.io/security/7learnings/7learnings-authentication/)
+- [7Learnings Domain Security](https://apis.io/security/7learnings/7learnings-domain-security/)
+- [7Learnings Trust Center](https://apis.io/security/7learnings/7learnings-trust-center/)
+- [7Learnings Vulnerability Disclosure](https://apis.io/security/7learnings/7learnings-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [7Learnings Scopes](https://apis.io/scopes/7learnings/7learnings-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [7Learnings Plans Pricing](https://apis.io/plans/7learnings/7learnings-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [7Learnings Rate Limits](https://apis.io/rate-limits/7learnings/7learnings-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://7learnings.com/)
+- [Documentation](https://7learnings.com/docs/)
+- [Sign up](https://7learnings.com/demo/)
+- [Support](https://7learnings.com/faq/)
+- [Changelog](https://7learnings.com/changelog/)
+- [Blog](https://7learnings.com/blog/)
+- [Security](https://7learnings.com/security-compliance-data-protection/)
+- [Compliance](https://7learnings.com/security-compliance-data-protection/)
+- [Trust centre](https://app.eu.vanta.com/7learnings.com/trust/7hxwl4mmwiq3njsehrfi4z)
+- [Privacy policy](https://7learnings.com/privacy-policy/)
+- [GitHub](https://github.com/7Learnings)
+
+## API Evangelist rating
+
+**Kin Score 30.4** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 52.5 |
+| Contract quality | 0.0 |
+| Contract governance | 33.3 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 38.1 |
+| Access clarity | 31.6 |
+
+**Agent readiness 19.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 38.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/7learnings/](https://apis.io/providers/7learnings/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for 7Learnings: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/7learnings/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
